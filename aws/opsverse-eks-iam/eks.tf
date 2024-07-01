@@ -35,7 +35,7 @@ module "opsverse-eks-cluster" {
   eks_managed_node_groups = {
     user_group_one = {
       name = "node-group-1"
-      instance_types = ["m5a.xlarge"]
+      instance_types = ["m7a.xlarge"]
       ami_type       = "AL2_x86_64"
       capacity_type  = "ON_DEMAND"
       # By default, the module creates a launch template to ensure tags are propagated to instances, etc.,
