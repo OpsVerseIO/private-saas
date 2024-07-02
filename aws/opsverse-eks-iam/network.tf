@@ -18,7 +18,7 @@ module "vpc" {
     "Terraform"                             = "true"
     "Environment"                           = "opsverse-cluster"
     "GeneratedBy"                           = "OpsVerse"
-    "kubernetes.io/cluster/${cluster_name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                =	"1"
   }
 
@@ -26,7 +26,7 @@ module "vpc" {
     "Terraform"                             = "true"
     "Environment"                           = "opsverse-cluster"
     "GeneratedBy"                           = "OpsVerse"
-    "kubernetes.io/cluster/${cluster_name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"       = "1"
   }
 }
