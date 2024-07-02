@@ -14,19 +14,19 @@ module "vpc" {
   single_nat_gateway   = true
   enable_dns_hostnames = true
 
-  public_subnet_tags                        = {
-    "Terraform"                             = "true"
-    "Environment"                           = "opsverse-cluster"
-    "GeneratedBy"                           = "OpsVerse"
+  public_subnet_tags                            = {
+    "Terraform"                                 = "true"
+    "Environment"                               = "opsverse-cluster"
+    "GeneratedBy"                               = "OpsVerse"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                =	"1"
+    "kubernetes.io/role/elb"                    =	"1"
   }
 
-  private_subnet_tags                       = {
-    "Terraform"                             = "true"
-    "Environment"                           = "opsverse-cluster"
-    "GeneratedBy"                           = "OpsVerse"
+  private_subnet_tags                           = {
+    "Terraform"                                 = "true"
+    "Environment"                               = "opsverse-cluster"
+    "GeneratedBy"                               = "OpsVerse"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"       = "1"
+    "kubernetes.io/role/internal-elb"           = "1"
   }
 }

@@ -12,8 +12,11 @@ module "opsverse-eks-cluster" {
   version = "19.21.0"
 
   cluster_name    = var.cluster_name
-  cluster_version = "1.28"
-  # manage_aws_auth= "true"
+  cluster_version = var.cluster_version
+  # Cluster endpoint access is set to public and private.
+  # In this config, the cluster endpoint is accessible from outside of the VPC. Worker node traffic to the endpoint will stay within the VPC.
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access = true
 
   // Need at least 2 AZs for EKS to create cluster
   # Uncomment this if a customer already has a VPC and Subnets

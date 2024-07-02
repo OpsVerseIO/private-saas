@@ -1,8 +1,9 @@
 ## Fill in with your network configs
 variable "cluster_name" {}
+variable "cluster_version" {}
 variable "aws_region" {}
 variable "keypair_name" {}
-variable "s3_bucket" { }
+variable "s3_bucket_name" {}
 variable "subnet_ids" { type = list }
 variable "vpc_id" {}
 variable "aws_profile" {}

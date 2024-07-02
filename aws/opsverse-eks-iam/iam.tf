@@ -8,7 +8,6 @@
 
 resource "aws_iam_role" "iam_for_loki_pods" {
   name = "eks-opsverse-s3-pod-role"
-
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -45,7 +44,7 @@ resource "aws_iam_policy" "loki_pod_permissions" {
                 "s3:ListBucket"
             ],
             "Resource": [
-                "arn:aws:s3:::${var.s3_bucket}/*"
+                "arn:aws:s3:::${var.s3_bucket_name}/*"
             ]
         },
         {
@@ -54,7 +53,7 @@ resource "aws_iam_policy" "loki_pod_permissions" {
                 "s3:ListBucket"
             ],
             "Resource": [
-                "arn:aws:s3:::${var.s3_bucket}"
+                "arn:aws:s3:::${var.s3_bucket_name}"
             ]
         },
         {

@@ -1,7 +1,8 @@
 aws_profile = "default"
 aws_region = "us-west-2"
 cluster_name = "opsverse-eks-cluster"
-s3_bucket = "opsverse-bucket"
+cluster_version = "1.28"
+s3_bucket_name = "opsverse-eks-bucket"
 subnet_ids = [
     "subnet-0cb2af484cc733af3", 
     "subnet-03e125b72f74725e0"
