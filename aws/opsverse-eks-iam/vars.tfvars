@@ -3,12 +3,13 @@ aws_region = "us-west-2"
 cluster_name = "opsverse-eks-cluster"
 cluster_version = "1.28"
 s3_bucket_name = "opsverse-eks-bucket"
+node_type = "m5a.xlarge"
+# This is relevant if VPC and Subnets already exists and the same should be used to create ths cluster.
 subnet_ids = [
     "subnet-0cb2af484cc733af3", 
     "subnet-03e125b72f74725e0"
 ]
 vpc_id = "vpc-07f7a27bb284d892a"
-keypair_name = "bastion"
 
 # This is relevant if VPC and Subnets has to be created by the Terraform. Ignore if these are already present.
 vpc_name            = "opsverse-vpc"
