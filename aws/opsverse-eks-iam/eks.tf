@@ -7,9 +7,27 @@ provider "aws" {
   region = var.aws_region
 }
 
+data "aws_eks_cluster" "default" {
+  name = module.opsverse-eks-cluster.cluster_id
+}
+
+data "aws_eks_cluster_auth" "default" {
+  name = module.opsverse-eks-cluster.cluster_id
+}
+
+provider "kubernetes" {
+  host                   = module.opsverse-eks-cluster.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.opsverse-eks-cluster.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.default.token
+}
+
+data "aws_availability_zones" "available" {}
+
+data "aws_caller_identity" "current" {}
+
 module "opsverse-eks-cluster" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.21.0"
+  version = "~> 18.20.1"
 
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
@@ -35,10 +53,21 @@ module "opsverse-eks-cluster" {
     disk_size      = 50
   }
 
+  manage_aws_auth_configmap = true
+  # Uncomment this block if you want to handle authmap/ RBAC ConfigMap from Terraform.
+  # By default, the person who created the cluster will have the access.
+  # aws_auth_users = [
+  #   {
+  #     userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/<username>"
+  #     username = "<username>"
+  #     groups   = ["system:masters"]
+  #   },
+  # ]
+
   eks_managed_node_groups = {
     user_group_one = {
       name = "node-group-1"
-      instance_types = ["m7a.xlarge"]
+      instance_types = ["${var.node_type}"]
       ami_type       = "AL2_x86_64"
       capacity_type  = "ON_DEMAND"
       # By default, the module creates a launch template to ensure tags are propagated to instances, etc.,
@@ -48,7 +77,6 @@ module "opsverse-eks-cluster" {
       max_size     = 4
       desired_size = 3
       root_volume_type = "gp2"
-      key_name = var.keypair_name
 
       # Uncomment this if a customer already has a VPC and Subnets
       # subnets = [
