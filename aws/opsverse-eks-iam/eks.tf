@@ -7,9 +7,23 @@ provider "aws" {
   region = var.aws_region
 }
 
+provider "kubernetes" {
+  host                   = module.opsverse-eks-cluster.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.opsverse-eks-cluster.cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.default.token
+}
+
+data "aws_eks_cluster_auth" "default" {
+  name = module.opsverse-eks-cluster.cluster_name
+}
+
+data "aws_availability_zones" "available" {}
+
+data "aws_caller_identity" "current" {}
+
 module "opsverse-eks-cluster" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.21.0"
+  version = "20.23.0"
 
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
@@ -28,9 +42,17 @@ module "opsverse-eks-cluster" {
   
   # Uncomment this if a new VPC has to be created as part of the cluster creation
   vpc_id          = module.vpc.vpc_id
-  subnet_ids      = module.vpc.private_subnets
+  subnet_ids      = flatten([module.vpc.private_subnets, module.vpc.public_subnets])
 
   enable_irsa     = "true"
+  # EKS Addons
+  cluster_addons = {
+    # Enable EBS CSI Driver by default
+    aws-ebs-csi-driver = {
+      service_account_role_arn = module.irsa-ebs-csi.iam_role_arn
+    }
+  }
+  enable_cluster_creator_admin_permissions = true
   eks_managed_node_group_defaults = {
     disk_size      = 50
   }
@@ -38,7 +60,7 @@ module "opsverse-eks-cluster" {
   eks_managed_node_groups = {
     user_group_one = {
       name = "node-group-1"
-      instance_types = ["m7a.xlarge"]
+      instance_types = ["${var.node_type}"]
       ami_type       = "AL2_x86_64"
       capacity_type  = "ON_DEMAND"
       # By default, the module creates a launch template to ensure tags are propagated to instances, etc.,
@@ -48,7 +70,6 @@ module "opsverse-eks-cluster" {
       max_size     = 4
       desired_size = 3
       root_volume_type = "gp2"
-      key_name = var.keypair_name
 
       # Uncomment this if a customer already has a VPC and Subnets
       # subnets = [
@@ -60,4 +81,36 @@ module "opsverse-eks-cluster" {
       subnet_ids      = module.vpc.private_subnets
     }
   }
+}
+
+data "aws_iam_policy" "ebs_csi_policy" {
+  arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+}
+
+module "irsa-ebs-csi" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version = "5.39.0"
+
+  create_role                   = true
+  role_name                     = "AmazonEKSTFEBSCSIRole-${module.opsverse-eks-cluster.cluster_name}"
+  provider_url                  = module.opsverse-eks-cluster.oidc_provider
+  role_policy_arns              = [data.aws_iam_policy.ebs_csi_policy.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:ebs-csi-controller-sa"]
+}
+
+module "aws-auth" {
+  source  = "terraform-aws-modules/eks/aws//modules/aws-auth"
+  version = "~> 20.0"
+
+  manage_aws_auth_configmap = true
+
+  # Please add all the users who wants to access the cluster
+  aws_auth_users = [
+    {
+      userarn  = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/<user>"
+      username = "<user>"
+      groups   = ["system:masters"]
+    },
+  ]
+  depends_on = [module.opsverse-eks-cluster, module.irsa-ebs-csi]
 }
