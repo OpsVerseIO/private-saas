@@ -15,7 +15,7 @@ module "opsverse-gke-cluster-network" {
       subnet_region = var.gcp_region
     },
     {
-      subnet_name   = "popsverse-gke-cluster-apps-public-c"
+      subnet_name   = "opsverse-gke-cluster-apps-public-c"
       subnet_ip     = "10.245.64.0/19"
       subnet_region = var.gcp_region
     },
