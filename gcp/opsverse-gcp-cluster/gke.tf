@@ -12,20 +12,40 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.opsverse-gke-cluster.ca_certificate)
 }
 
+module "vpc" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 9.1"
 
+  network_name = var.network_name
+  project_id    = var.gcp_project_id
 
+  subnets = [
+    {
+      subnet_name   = "public-subnet"
+      subnet_ip   = var.public_subnet_cidr
+      subnet_region = var.gcp_region
+      role   = "ACTIVE"
+    },
+    {
+      subnet_name   = "private-subnet"
+      subnet_ip   = var.private_subnet_cidr
+      subnet_region = var.gcp_region
+      role   = "ACTIVE"
+      subnet_private_access = true
+    }
+  ]
+}
 module "opsverse-gke-cluster" {
-  source                     = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
+  source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = var.gcp_project_id
   name                       = var.cluster_name
   region                     = var.gcp_region
   kubernetes_version         = var.cluster_version
-  network                    = var.network_name
-  subnetwork                 = var.subnet_name
+  network                    = module.vpc.network_name
+  subnetwork                 = "public-subnet"
   ip_range_pods              = var.ip_range_pods
   ip_range_services          = var.ip_range_services
   regional                   = true
-  master_ipv4_cidr_block     = var.master_cidr
 
   node_pools = [
     {
@@ -53,11 +73,11 @@ module "opsverse-gke-cluster" {
 }
 
 
-resource "google_project_iam_binding" "gke_cluster_admin" {
-  project = var.gcp_project_id
-  role    = "roles/container.admin"
+# resource "google_project_iam_binding" "gke_cluster_admin" {
+#   project = var.gcp_project_id
+#   role    = "roles/container.admin"
 
-  members = [
-    "user:amarthyanath@opsverse.io",
-  ]
-}
+#   members = [
+#     "user:amarthyanath@opsverse.io",
+#   ]
+# }
