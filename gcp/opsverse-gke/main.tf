@@ -18,7 +18,7 @@ module "opsverse-gke-cluster" {
   ip_range_services        = "ip-range-services" 
   node_pools = [
     {
-      name                 = "node-pool"
+      name                 = "opsverse-node-pool"
       machine_type         = var.node_type
       node_locations       = var.node_locations
 
@@ -30,7 +30,7 @@ module "opsverse-gke-cluster" {
       max_count            = 3
       disk_size_gb         = 30
       autoscaling          = false 
-      auto_upgrade         = true
+      auto_upgrade         = false
     },
   ]
 }
