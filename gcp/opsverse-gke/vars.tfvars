@@ -1,0 +1,7 @@
+gcp_project_id      = "opsverse-dev-poc"
+gcp_region          = "us-east4"
+cluster_name        = "opsverse-gke-cluster"
+cluster_version     = "1.30"
+network_name        = "opsverse-gke-vpc"
+node_type           = "e2-standard-4"
+node_locations      = "us-east4-a,us-east4-b,us-east4-c"
