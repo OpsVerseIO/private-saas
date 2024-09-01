@@ -16,6 +16,8 @@ module "opsverse-gke-cluster" {
   subnetwork               = module.opsverse-gke-cluster-network.subnets_names[0]
   ip_range_pods            = "ip-range-pods" 
   ip_range_services        = "ip-range-services" 
+  deletion_protection      = var.deletion_protection
+  release_channel          = var.release_channel
   node_pools = [
     {
       name                 = "opsverse-node-pool"
@@ -29,8 +31,8 @@ module "opsverse-gke-cluster" {
       min_count            = 3
       max_count            = 3
       disk_size_gb         = 30
-      autoscaling          = false 
-      auto_upgrade         = false
+      autoscaling          = false
+      auto_upgrade         = var.auto_upgrade_nodes
     },
   ]
 }
