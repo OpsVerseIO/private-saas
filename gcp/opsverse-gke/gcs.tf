@@ -5,10 +5,6 @@ module "bucket" {
   name       = var.bucket_name
   project_id = var.gcp_project_id
   location   = var.gcp_region
-  iam_members = [{
-    role   = "roles/storage.admin"
-    member = "user:amarthyanath@opsverse.io"
-  }]
 }
 
 

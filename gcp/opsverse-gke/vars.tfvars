@@ -3,13 +3,13 @@ gcp_region     = "us-east4"
 cluster_name   = "opsverse-gke-cluster"
 # The bucket name should be of the format devopsnow-loki-<customer_name>-<stack_name>
 #If customer name is kylaq , the stack name is decided as alpha then bucket_name = "devopsnow-loki-kylaq-alpha" 
-bucket_name = "devopsnow-loki-kylaq-alpha"
+bucket_name = "devopsnow-loki-<customer_name>-<stack_name>"
 
 
 #The customer_stack should be of the format <customer_name>-<stack_name> 
 #If customer name is kylaq , the stack name is decided as alpha then customer_stack = "kylaq-alpha"
 #Please Note: The stack name used here should be the same one when trying to launch the stack through the admin console.
-customer_stack = "kylaq-alpha"
+customer_stack = "<customer_name>-<stack_name>"
 
 # It is recommended to ssecify the exact version (With exact Major, Minor and Patch) you want to use.
 # Since `auto_upgrade` option is disbaled, specifying the general version is not recommended.

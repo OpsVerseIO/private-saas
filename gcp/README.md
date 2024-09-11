@@ -5,6 +5,7 @@ A template for creating GKE cluster as part of Private SaaS deployment.
 
 ### Prerequisites
 Download the latest terraform binary from https://www.terraform.io/downloads and install.
+Create a GCS bucket in the same GCP project to store the Terraform state file and update its name in the `backend.tf` file.
 
 > [!IMPORTANT]
 > **Note**: The terraform version should be `1.3.x` or higher.
