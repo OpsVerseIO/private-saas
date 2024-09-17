@@ -1,41 +1,41 @@
 variable "gcp_project_id" {
-  type        = string
+  type = string
 }
 
 variable "gcp_region" {
-  type        = string
+  type = string
 }
 
 variable "cluster_name" {
-  type        = string
+  type = string
 }
 
 variable "cluster_version" {
-  type        = string
+  type = string
 }
 
 variable "node_type" {
-  type        = string
+  type = string
 }
 
 variable "node_locations" {
-  type        = string
+  type = string
 }
 
 variable "network_name" {
-  type        = string
+  type = string
 }
 
 variable "release_channel" {
-  type        = string
+  type = string
 }
 
 variable "deletion_protection" {
-  type        = bool
+  type = bool
 }
 
 variable "auto_upgrade_nodes" {
-  type        = bool
+  type = bool
 }
 
 variable "subnets" {
@@ -53,4 +53,13 @@ variable "secondary_ranges" {
     range_name    = string
     ip_cidr_range = string
   })))
+}
+
+variable "bucket_name" {
+  type = string
+}
+
+
+variable "service_account_base_name" {
+  type = string
 }

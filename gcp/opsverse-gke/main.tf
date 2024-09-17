@@ -14,25 +14,25 @@ module "opsverse-gke-cluster" {
   region                   = var.gcp_region
   network                  = module.opsverse-gke-cluster-network.network_name
   subnetwork               = module.opsverse-gke-cluster-network.subnets_names[0]
-  ip_range_pods            = "ip-range-pods" 
-  ip_range_services        = "ip-range-services" 
+  ip_range_pods            = "ip-range-pods"
+  ip_range_services        = "ip-range-services"
   deletion_protection      = var.deletion_protection
   release_channel          = var.release_channel
   node_pools = [
     {
-      name                 = "opsverse-node-pool"
-      machine_type         = var.node_type
-      node_locations       = var.node_locations
+      name           = "opsverse-node-pool"
+      machine_type   = var.node_type
+      node_locations = var.node_locations
 
       // nodes per location (this multiplied by number
       // of locations will be the current node count)
-      node_count           = 1
-      initial_node_count   = 3
-      min_count            = 3
-      max_count            = 3
-      disk_size_gb         = 30
-      autoscaling          = false
-      auto_upgrade         = var.auto_upgrade_nodes
+      node_count         = 1
+      initial_node_count = 3
+      min_count          = 3
+      max_count          = 3
+      disk_size_gb       = 30
+      autoscaling        = false
+      auto_upgrade       = var.auto_upgrade_nodes
     },
   ]
 }
