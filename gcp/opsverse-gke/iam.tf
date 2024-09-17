@@ -8,9 +8,9 @@ resource "google_storage_bucket_iam_binding" "bucket_admin" {
 module "opsverse-workload-identity" {
   source              = "terraform-google-modules/kubernetes-engine/google//modules/workload-identity"
   use_existing_k8s_sa = true
-  name                = "loki-sa-${var.customer_stack}"
-  k8s_sa_name         = "${var.customer_stack}-observe-backend-loki"
-  namespace           = "${var.customer_stack}-observe"
+  name                = "loki-sa-${var.service_account_base_name}"
+  k8s_sa_name         = "${var.service_account_base_name}-observe-backend-loki"
+  namespace           = "${var.service_account_base_name}-observe"
   project_id          = var.gcp_project_id
   roles               = ["roles/iam.serviceAccountTokenCreator", "roles/viewer"]
   annotate_k8s_sa     = false

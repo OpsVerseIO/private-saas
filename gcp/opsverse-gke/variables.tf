@@ -60,6 +60,6 @@ variable "bucket_name" {
 }
 
 
-variable "customer_stack" {
+variable "service_account_base_name" {
   type = string
 }

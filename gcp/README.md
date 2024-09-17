@@ -10,6 +10,12 @@ Create a GCS bucket in the same GCP project to store the Terraform state file an
 > [!IMPORTANT]
 > **Note**: The terraform version should be `1.3.x` or higher.
 
+> **Note**: The bucket name should follow this format: devopsnow-loki-<customer_name>-<stack_name>
+If customer name is kylaq , the stack name is decided as alpha then bucket_name will be `devopsnow-loki-kylaq-alpha`
+
+> **Note**: The service_account_base_name should follow this format: <customer_name>-<stack_name>
+For example, if the customer name is `kylaq` and the stack name is `alpha`, the service_account_base_name will be: `kylaq-alpha`
+Please Note: The stack name used here should be the same one when trying to launch the stack through the admin console.
 
 ### Steps to create the cluster
 
