@@ -41,7 +41,7 @@ variable "subnet_names" {
 variable "nodepool_availability_zones" {
   type        = list(number)
   description = "Expected availability zones for the nodes"
-  default = [1]
+  default     = [1]
 }
 
 variable "system_nodepool_type" {
@@ -55,11 +55,11 @@ variable "system_nodepool_size" {
 }
 
 variable "custom_node_pool_labels" {
-  type    = map(string)
+  type = map(string)
 }
 
 variable "custom_node_pool_tags" {
-  type    = map(string)
+  type = map(string)
 }
 
 variable "public_access" {
