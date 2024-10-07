@@ -1,5 +1,5 @@
-resource_group_name         = "opsverse-aks-rg" #resource group for vpc and cluster
-prefix                      = "opsverse-aks"
+resource_group_name         = "opsverse-aks-rg"      #resource group for vpc and cluster
+prefix                      = "opsverse-aks"         #for network
 cluster_name                = "opsverse-aks-cluster" #Cluster name
 location                    = "centralindia"         #region for all resources
 kubernetes_version          = "1.30"
@@ -11,12 +11,10 @@ system_nodepool_type        = "VirtualMachineScaleSets"
 system_nodepool_size        = "Standard_D2as_v4"
 
 custom_node_pool_labels = {
-  "rg"      = "opsverse-aks-sass"
   "cluster" = "opsverse-aks-sass"
   "env"     = "prod"
 }
 custom_node_pool_tags = {
-  "rg"      = "opsverse-aks-sass"
   "cluster" = "opsverse-aks-sass"
   "env"     = "prod"
 }
