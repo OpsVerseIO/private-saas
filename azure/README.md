@@ -5,7 +5,8 @@ A template for creating an Azure Kubernetes Service (AKS) cluster as part of Pri
 
 ### Prerequisites
 - Download and install the latest Terraform binary from [Terraform Downloads](https://www.terraform.io/downloads).
-- A Storage Account and containers should be created in Azure. Update the relevant values in `backend.tf`.
+- The Azure Resource Group for storing the Terraform state must be created prior to initiating the cluster creation process, and the values in `backend.tf`should be updated accordingly
+- A Storage Account and containers should be created in Azure. Also update the relevant values in `backend.tf`.
 - Azure CLI installed and configured.
 
 
