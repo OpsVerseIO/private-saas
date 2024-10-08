@@ -1,17 +1,17 @@
 output "resource_group" {
-  value = azurerm_resource_group.aks-private-sass.name
+  value = azurerm_resource_group.aks-private-saas.name
 }
 
-output "aks-private-sass-vnet" {
-  value = module.aks-private-sass-vnet.vnet_id
+output "aks-private-saas-vnet" {
+  value = module.aks-private-saas-vnet.vnet_id
 }
 
 output "subnet" {
-  value = module.aks-private-sass-vnet
+  value = module.aks-private-saas-vnet
 }
 
 output "kube_config" {
-  value     = module.aks-private-sass.kube_config_raw
+  value     = module.aks-private-saas.kube_config_raw
   sensitive = true
 }
 

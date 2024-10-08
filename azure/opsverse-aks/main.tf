@@ -1,17 +1,17 @@
-resource "azurerm_resource_group" "aks-private-sass" {
+resource "azurerm_resource_group" "aks-private-saas" {
   name     = var.resource_group_name
   location = var.location
 }
 
-module "aks-private-sass" {
+module "aks-private-saas" {
   source               = "Azure/aks/azurerm"
-  resource_group_name  = azurerm_resource_group.aks-private-sass.name
+  resource_group_name  = azurerm_resource_group.aks-private-saas.name
   kubernetes_version   = var.kubernetes_version
   orchestrator_version = var.kubernetes_version
   prefix               = "tf"
   cluster_name         = var.cluster_name
   network_plugin       = "azure"
-  vnet_subnet_id       = module.aks-private-sass-vnet.vnet_subnets[0]
+  vnet_subnet_id       = module.aks-private-saas-vnet.vnet_subnets[0]
   os_disk_size_gb      = 128
   # currently, the AKS/module requires at least one "System" (not "User") node pool, 
   # and those can't be scaled to 0
@@ -57,7 +57,7 @@ module "aks-private-sass" {
     },
   }
 
-  depends_on = [module.aks-private-sass-vnet]
+  depends_on = [module.aks-private-saas-vnet]
 }
 
 
@@ -66,7 +66,7 @@ module "aks-private-sass" {
 # Kubeconfig
 ##########################
 resource "local_file" "kubeconfig" {
-  depends_on = [module.aks-private-sass]
+  depends_on = [module.aks-private-saas]
   filename   = "kubeconfig"
-  content    = module.aks-private-sass.kube_config_raw
+  content    = module.aks-private-saas.kube_config_raw
 }

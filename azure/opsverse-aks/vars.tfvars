@@ -11,10 +11,10 @@ system_nodepool_type        = "VirtualMachineScaleSets"
 system_nodepool_size        = "Standard_D2as_v4"
 
 custom_node_pool_labels = {
-  "cluster" = "opsverse-aks-sass"
+  "cluster" = "opsverse"
   "env"     = "prod"
 }
 custom_node_pool_tags = {
-  "cluster" = "opsverse-aks-sass"
+  "cluster" = "opsverse"
   "env"     = "prod"
 }
