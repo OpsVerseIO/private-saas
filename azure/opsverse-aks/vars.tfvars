@@ -9,7 +9,8 @@ subnet_prefixes             = ["10.241.0.0/18", "10.241.64.0/18", "10.241.128.0/
 nodepool_availability_zones = [1]
 system_nodepool_type        = "VirtualMachineScaleSets"
 system_nodepool_size        = "Standard_D2as_v4"
-
+custom_nodepool_name        = "nodepool"
+custom_nodepool_size        = "Standard_B4ms"
 custom_node_pool_labels = {
   "cluster" = "opsverse"
   "env"     = "prod"

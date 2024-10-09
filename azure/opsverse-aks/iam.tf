@@ -24,6 +24,7 @@ resource "azuread_application" "aks_sp" {
     end_date     = timeadd(timestamp(), "17520h")
   }
 }
+
 resource "local_file" "sp_secret_file" {
   content  = tolist(azuread_application.aks_sp.password).0.value
   filename = "${path.module}/sp_secret.txt"

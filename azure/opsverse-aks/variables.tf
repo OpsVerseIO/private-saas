@@ -51,7 +51,7 @@ variable "system_nodepool_type" {
 
 variable "system_nodepool_size" {
   type        = string
-  description = "System nodepool vm type"
+  description = "System nodepool vm size"
 }
 
 variable "custom_node_pool_labels" {
@@ -64,4 +64,14 @@ variable "custom_node_pool_tags" {
 
 variable "public_access" {
   default = false
+}
+
+variable "custom_nodepool_name" {
+  type        = string
+  description = "Custom nodepool name"
+}
+
+variable "custom_nodepool_size" {
+  type        = string
+  description = "Custom nodepool vm size"
 }

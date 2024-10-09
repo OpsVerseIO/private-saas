@@ -40,8 +40,8 @@ module "aks-private-saas" {
 
   node_pools = {
     custom_node_pool = {
-      name                   = "nodepool"
-      vm_size                = "Standard_B4ms"
+      name                   = var.custom_nodepool_name
+      vm_size                = var.custom_nodepool_size
       orchestrator_version   = var.kubernetes_version
       os_disk_size_gb        = 30
       enable_auto_scaling    = false
